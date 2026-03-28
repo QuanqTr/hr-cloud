@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Database Specifications - HR Cloud</title>
+    <style>
+        body { font-family: 'Times New Roman', serif; line-height: 1.6; color: #000; margin: 40px; }
+        h1 { text-align: center; }
+        .table-container { margin-bottom: 50px; page-break-inside: avoid; }
+        .table-title { font-weight: bold; font-style: italic; text-align: center; margin-bottom: 10px; }
+        table { width: 100%; border-collapse: collapse; margin-bottom: 20px; table-layout: fixed; }
+        th, td { border: 1px solid #000; padding: 8px; vertical-align: middle; }
+        .header-main { background-color: #c5e0b4; font-weight: bold; }
+        .header-sub { background-color: #e2f0d9; font-weight: bold; text-align: center; }
+        .col-attr { width: 25%; }
+        .col-type { width: 20%; }
+        .col-cons { width: 15%; }
+        .col-desc { width: 40%; }
+        .center { text-align: center; }
+    </style>
+</head>
+<body>
+
+    <h1>Tài liệu Mô tả Chi tiết Cơ sở dữ liệu - Dự án HR Cloud</h1>
+
+    <!-- 1. users Table -->
+    <div class="table-container">
+        <div class="table-title">Bảng 1: Bảng mô tả chi tiết lớp users</div>
+        <table>
+            <tr class="header-main">
+                <td colspan="2" class="center">Tên lớp: users</td>
+                <td colspan="2" class="center">Ý nghĩa: Bảng lưu trữ thông tin tài khoản và phân quyền người dùng</td>
+            </tr>
+            <tr class="header-sub">
+                <td class="col-attr">Tên thuộc tính</td>
+                <td class="col-type">Kiểu dữ liệu</td>
+                <td class="col-cons">Ràng buộc</td>
+                <td class="col-desc">Ý nghĩa</td>
+            </tr>
+            <tr>
+                <td>id</td>
+                <td>serial</td>
+                <td class="center">Khóa chính</td>
+                <td>Mã định danh duy nhất (tự tăng)</td>
+            </tr>
+            <tr>
+                <td>username</td>
+                <td>text</td>
+                <td class="center">Unique, Not Null</td>
+                <td>Tên đăng nhập hệ thống</td>
+            </tr>
+            <tr>
+                <td>password_hash</td>
+                <td>text</td>
+                <td class="center">Not Null</td>
+                <td>Mật khẩu đã được mã hóa</td>
+            </tr>
+            <tr>
+                <td>role</td>
+                <td>text</td>
+                <td class="center">Default: 'employee'</td>
+                <td>Vai trò (admin, manager, employee)</td>
+            </tr>
+            <tr>
+                <td>is_active</td>
+                <td>boolean</td>
+                <td class="center">Default: true</td>
+                <td>Trạng thái hoạt động của tài khoản</td>
+            </tr>
+            <tr>
+                <td>created_at</td>
+                <td>timestamp</td>
+                <td class="center">Default: now()</td>
+                <td>Thời gian tạo tài khoản</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- 2. employees Table -->
+    <div class="table-container">
+        <div class="table-title">Bảng 2: Bảng mô tả chi tiết lớp employees</div>
+        <table>
+            <tr class="header-main">
+                <td colspan="2" class="center">Tên lớp: employees</td>
+                <td colspan="2" class="center">Ý nghĩa: Bảng lưu trữ hồ sơ thông tin chi tiết của nhân viên</td>
+            </tr>
+            <tr class="header-sub">
+                <td class="col-attr">Tên thuộc tính</td>
+                <td class="col-type">Kiểu dữ liệu</td>
+                <td class="col-cons">Ràng buộc</td>
+                <td class="col-desc">Ý nghĩa</td>
+            </tr>
+            <tr>
+                <td>id</td>
+                <td>serial</td>
+                <td class="center">Khóa chính</td>
+                <td>Mã định danh (tự tăng)</td>
+            </tr>
+            <tr>
+                <td>employee_code</td>
+                <td>text</td>
+                <td class="center">Unique, Not Null</td>
+                <td>Mã nhân viên (duy nhất)</td>
+            </tr>
+            <tr>
+                <td>full_name</td>
+                <td>text</td>
+                <td class="center">Not Null</td>
+                <td>Họ và tên đầy đủ</td>
+            </tr>
+            <tr>
+                <td>position</td>
+                <td>text</td>
+                <td class="center">Not Null</td>
+                <td>Chức vụ/Vị trí công tác</td>
+            </tr>
+            <tr>
+                <td>department_id</td>
+                <td>integer</td>
+                <td class="center">Khóa ngoại</td>
+                <td>Tham chiếu đến departments.id</td>
+            </tr>
+            <tr>
+                <td>email</td>
+                <td>text</td>
+                <td></td>
+                <td>Địa chỉ email cá nhân</td>
+            </tr>
+            <tr>
+                <td>phone</td>
+                <td>text</td>
+                <td></td>
+                <td>Số điện thoại liên lạc</td>
+            </tr>
+            <tr>
+                <td>user_id</td>
+                <td>integer</td>
+                <td class="center">Khóa ngoại, Unique</td>
+                <td>Liên kết với tài khoản hệ thống (users.id)</td>
+            </tr>
+            <tr>
+                <td>fingerprint_id</td>
+                <td>text</td>
+                <td class="center">Unique</td>
+                <td>Mã ID vân tay dùng để chấm công</td>
+            </tr>
+            <tr>
+                <td>is_active</td>
+                <td>boolean</td>
+                <td class="center">Default: true</td>
+                <td>Trạng thái nhân viên đang làm việc</td>
+            </tr>
+            <tr>
+                <td>created_at</td>
+                <td>timestamp</td>
+                <td class="center">Default: now()</td>
+                <td>Thời gian tạo hồ sơ</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- 3. departments Table -->
+    <div class="table-container">
+        <div class="table-title">Bảng 3: Bảng mô tả chi tiết lớp departments</div>
+        <table>
+            <tr class="header-main">
+                <td colspan="2" class="center">Tên lớp: departments</td>
+                <td colspan="2" class="center">Ý nghĩa: Bảng lưu trữ thông tin các phòng ban</td>
+            </tr>
+            <tr class="header-sub">
+                <td class="col-attr">Tên thuộc tính</td>
+                <td class="col-type">Kiểu dữ liệu</td>
+                <td class="col-cons">Ràng buộc</td>
+                <td class="col-desc">Ý nghĩa</td>
+            </tr>
+            <tr>
+                <td>id</td>
+                <td>serial</td>
+                <td class="center">Khóa chính</td>
+                <td>Mã định danh phòng ban</td>
+            </tr>
+            <tr>
+                <td>name</td>
+                <td>text</td>
+                <td class="center">Not Null</td>
+                <td>Tên phòng ban</td>
+            </tr>
+            <tr>
+                <td>description</td>
+                <td>text</td>
+                <td></td>
+                <td>Mô tả về chức năng phòng ban</td>
+            </tr>
+            <tr>
+                <td>manager_id</td>
+                <td>integer</td>
+                <td class="center">Khóa ngoại</td>
+                <td>ID nhân viên quản lý (trưởng phòng)</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- 4. attendance Table -->
+    <div class="table-container">
+        <div class="table-title">Bảng 4: Bảng mô tả chi tiết lớp attendance</div>
+        <table>
+            <tr class="header-main">
+                <td colspan="2" class="center">Tên lớp: attendance</td>
+                <td colspan="2" class="center">Ý nghĩa: Bảng lưu trữ dữ liệu chấm công hằng ngày</td>
+            </tr>
+            <tr class="header-sub">
+                <td class="col-attr">Tên thuộc tính</td>
+                <td class="col-type">Kiểu dữ liệu</td>
+                <td class="col-cons">Ràng buộc</td>
+                <td class="col-desc">Ý nghĩa</td>
+            </tr>
+            <tr>
+                <td>id</td>
+                <td>serial</td>
+                <td class="center">Khóa chính</td>
+                <td>Mã định danh bản ghi</td>
+            </tr>
+            <tr>
+                <td>employee_id</td>
+                <td>integer</td>
+                <td class="center">Khóa ngoại</td>
+                <td>ID nhân viên thực hiện chấm công</td>
+            </tr>
+            <tr>
+                <td>date</td>
+                <td>text</td>
+                <td class="center">Not Null</td>
+                <td>Ngày chấm công (YYYY-MM-DD)</td>
+            </tr>
+            <tr>
+                <td>check_in</td>
+                <td>text</td>
+                <td></td>
+                <td>Giờ vào (HH:mm)</td>
+            </tr>
+            <tr>
+                <td>check_out</td>
+                <td>text</td>
+                <td></td>
+                <td>Giờ ra (HH:mm)</td>
+            </tr>
+            <tr>
+                <td>status</td>
+                <td>text</td>
+                <td class="center">Default: 'absent'</td>
+                <td>Trạng thái (on_time, late, early_leave, on_leave, absent)</td>
+            </tr>
+            <tr>
+                <td>late_minutes</td>
+                <td>integer</td>
+                <td class="center">Default: 0</td>
+                <td>Số phút đi muộn (sau 08:15)</td>
+            </tr>
+            <tr>
+                <td>early_leave_minutes</td>
+                <td>integer</td>
+                <td class="center">Default: 0</td>
+                <td>Số phút về sớm (trước 17:15)</td>
+            </tr>
+            <tr>
+                <td>work_hours</td>
+                <td>real</td>
+                <td></td>
+                <td>Tổng số giờ làm việc thực tế</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- 5. leaves Table -->
+    <div class="table-container">
+        <div class="table-title">Bảng 5: Bảng mô tả chi tiết lớp leaves</div>
+        <table>
+            <tr class="header-main">
+                <td colspan="2" class="center">Tên lớp: leaves</td>
+                <td colspan="2" class="center">Ý nghĩa: Bảng lưu trữ các đơn nghỉ phép</td>
+            </tr>
+            <tr class="header-sub">
+                <td class="col-attr">Tên thuộc tính</td>
+                <td class="col-type">Kiểu dữ liệu</td>
+                <td class="col-cons">Ràng buộc</td>
+                <td class="col-desc">Ý nghĩa</td>
+            </tr>
+            <tr>
+                <td>id</td>
+                <td>serial</td>
+                <td class="center">Khóa chính</td>
+                <td>ID đơn nghỉ phép</td>
+            </tr>
+            <tr>
+                <td>employee_id</td>
+                <td>integer</td>
+                <td class="center">Khóa ngoại</td>
+                <td>ID nhân viên xin nghỉ</td>
+            </tr>
+            <tr>
+                <td>leave_type</td>
+                <td>text</td>
+                <td class="center">Not Null</td>
+                <td>Loại nghỉ (Annual, Sick, Personal...)</td>
+            </tr>
+            <tr>
+                <td>status</td>
+                <td>text</td>
+                <td class="center">Default: 'pending'</td>
+                <td>Trạng thái duyệt (pending, approved, rejected)</td>
+            </tr>
+            <tr>
+                <td>total_days</td>
+                <td>integer</td>
+                <td></td>
+                <td>Tổng số ngày nghỉ tính cả ngày bắt đầu/kết thúc</td>
+            </tr>
+            <tr>
+                <td>approved_by</td>
+                <td>integer</td>
+                <td class="center">Khóa ngoại</td>
+                <td>ID người quản lý thực hiện duyệt đơn</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- 6. settings Table -->
+    <div class="table-container">
+        <div class="table-title">Bảng 6: Bảng mô tả chi tiết lớp settings</div>
+        <table>
+            <tr class="header-main">
+                <td colspan="2" class="center">Tên lớp: settings</td>
+                <td colspan="2" class="center">Ý nghĩa: Bảng cấu hình hệ thống</td>
+            </tr>
+            <tr class="header-sub">
+                <td class="col-attr">Tên thuộc tính</td>
+                <td class="col-type">Kiểu dữ liệu</td>
+                <td class="col-cons">Ràng buộc</td>
+                <td class="col-desc">Ý nghĩa</td>
+            </tr>
+            <tr>
+                <td>id</td>
+                <td>serial</td>
+                <td class="center">Khóa chính</td>
+                <td>Mã định danh cấu hình</td>
+            </tr>
+            <tr>
+                <td>key</td>
+                <td>text</td>
+                <td class="center">Unique</td>
+                <td>Mã khóa cấu hình (workStartTime, workEndTime...)</td>
+            </tr>
+            <tr>
+                <td>value</td>
+                <td>text</td>
+                <td></td>
+                <td>Giá trị của cấu hình tương ứng</td>
+            </tr>
+            <tr>
+                <td>updated_at</td>
+                <td>timestamp</td>
+                <td></td>
+                <td>Thời điểm cập nhật cấu hình lần cuối</td>
+            </tr>
+        </table>
+    </div>
+
+</body>
+</html>

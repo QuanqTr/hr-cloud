@@ -1,8 +1,6 @@
-import { drizzle } from "drizzle-orm/node-postgres";
-import pg from "pg";
+import { drizzle } from "drizzle-orm/postgres-js";
+import postgres from "postgres";
 import * as schema from "./schema";
-
-const { Pool } = pg;
 
 if (!process.env.DATABASE_URL) {
   throw new Error(
@@ -10,7 +8,12 @@ if (!process.env.DATABASE_URL) {
   );
 }
 
-export const pool = new Pool({ connectionString: process.env.DATABASE_URL });
-export const db = drizzle(pool, { schema });
+// Supabase Transaction Pooler (Port 6543) does not support prepared statements.
+// We use SSL and disable 'prepare' for compatibility.
+const client = postgres(process.env.DATABASE_URL, { 
+  prepare: false,
+  ssl: "require" 
+});
+export const db = drizzle(client, { schema });
 
 export * from "./schema";

@@ -1,0 +1,94 @@
+<mxfile host="app.diagrams.net" modified="2026-03-28T06:24:25.000Z" agent="Antigravity" version="21.0.0" type="device">
+  <diagram id="DBClassDiagram" name="HR Cloud Database Class Diagram">
+    <mxGraphModel dx="1422" dy="798" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        
+        <!-- User Class -->
+        <mxCell id="class_users" value="users&#xa;+ id: serial [PK]&#xa;+ username: text [U]&#xa;+ password_hash: text&#xa;+ role: text&#xa;+ is_active: boolean&#xa;+ created_at: timestamp" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#000000;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="40" y="40" width="180" height="130" as="geometry" />
+        </mxCell>
+
+        <!-- Employee Class -->
+        <mxCell id="class_employees" value="employees&#xa;+ id: serial [PK]&#xa;+ employee_code: text [U]&#xa;+ full_name: text&#xa;+ position: text&#xa;+ department_id: int [FK]&#xa;+ email: text&#xa;+ phone: text&#xa;+ address: text&#xa;+ date_of_birth: text&#xa;+ hire_date: text&#xa;+ user_id: int [FK, U]&#xa;+ fingerprint_id: text [U]&#xa;+ is_active: boolean&#xa;+ created_at: timestamp" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#000000;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="360" y="40" width="220" height="300" as="geometry" />
+        </mxCell>
+
+        <!-- Department Class -->
+        <mxCell id="class_departments" value="departments&#xa;+ id: serial [PK]&#xa;+ name: text&#xa;+ description: text&#xa;+ manager_id: int [FK]&#xa;+ created_at: timestamp" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#000000;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="720" y="40" width="180" height="120" as="geometry" />
+        </mxCell>
+
+        <!-- Attendance Class -->
+        <mxCell id="class_attendance" value="attendance&#xa;+ id: serial [PK]&#xa;+ employee_id: int [FK]&#xa;+ date: text&#xa;+ check_in: text&#xa;+ check_out: text&#xa;+ status: text&#xa;+ late_minutes: int&#xa;+ early_leave_minutes: int&#xa;+ work_hours: real&#xa;+ note: text&#xa;+ created_at: timestamp" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#000000;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="40" y="400" width="200" height="230" as="geometry" />
+        </mxCell>
+
+        <!-- Leave Class -->
+        <mxCell id="class_leaves" value="leaves&#xa;+ id: serial [PK]&#xa;+ employee_id: int [FK]&#xa;+ leave_type: text&#xa;+ start_date: text&#xa;+ end_date: text&#xa;+ total_days: int&#xa;+ reason: text&#xa;+ status: text&#xa;+ approved_by: int [FK]&#xa;+ approved_at: timestamp&#xa;+ note: text&#xa;+ created_at: timestamp" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#000000;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="440" y="400" width="200" height="260" as="geometry" />
+        </mxCell>
+
+        <!-- Setting Class -->
+        <mxCell id="class_settings" value="settings&#xa;+ id: serial [PK]&#xa;+ key: text [U]&#xa;+ value: text&#xa;+ updated_at: timestamp" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#000000;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="840" y="400" width="180" height="110" as="geometry" />
+        </mxCell>
+
+        <!-- Relationships with proper black style -->
+        <!-- User <-> Employee (1:1/1:0) -->
+        <mxCell id="rel_u_e" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.25;endArrow=none;strokeColor=#000000;" edge="1" parent="1" source="class_users" target="class_employees">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="rel_label_u_e" value="1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="rel_u_e">
+          <mxGeometry x="-0.8" relative="1" as="geometry"><mxPoint x="10" y="-10" as="offset"/></mxGeometry>
+        </mxCell>
+        <mxCell id="rel_label_u_e2" value="0..1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="rel_u_e">
+          <mxGeometry x="0.8" relative="1" as="geometry"><mxPoint x="-15" y="-10" as="offset"/></mxGeometry>
+        </mxCell>
+
+        <!-- Department <-> Employee (1:N) -->
+        <mxCell id="rel_d_e" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;entryX=1;entryY=0.25;endArrow=none;strokeColor=#000000;" edge="1" parent="1" source="class_departments" target="class_employees">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="rel_label_d_e" value="1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="rel_d_e">
+          <mxGeometry x="-0.8" relative="1" as="geometry"><mxPoint x="10" y="-10" as="offset"/></mxGeometry>
+        </mxCell>
+        <mxCell id="rel_label_d_e2" value="0..N" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="rel_d_e">
+          <mxGeometry x="0.8" relative="1" as="geometry"><mxPoint x="-15" y="-10" as="offset"/></mxGeometry>
+        </mxCell>
+
+        <!-- Employee <-> Attendance (1:N) -->
+        <mxCell id="rel_e_att" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.75;entryX=1;entryY=0.5;endArrow=none;strokeColor=#000000;" edge="1" parent="1" source="class_employees" target="class_attendance">
+          <mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="320" y="265"/><mxPoint x="320" y="515"/></Array></mxGeometry>
+        </mxCell>
+        <mxCell id="rel_label_e_att" value="1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="rel_e_att">
+          <mxGeometry x="-0.9" relative="1" as="geometry"><mxPoint x="10" y="-10" as="offset"/></mxGeometry>
+        </mxCell>
+        <mxCell id="rel_label_e_att2" value="0..N" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="rel_e_att">
+          <mxGeometry x="0.9" relative="1" as="geometry"><mxPoint x="-15" y="-10" as="offset"/></mxGeometry>
+        </mxCell>
+
+        <!-- Employee <-> Leaves (1:N) -->
+        <mxCell id="rel_e_l" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;endArrow=none;strokeColor=#000000;" edge="1" parent="1" source="class_employees" target="class_leaves">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="rel_label_e_l" value="1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="rel_e_l">
+          <mxGeometry x="-0.8" relative="1" as="geometry"><mxPoint x="10" y="0" as="offset"/></mxGeometry>
+        </mxCell>
+        <mxCell id="rel_label_e_l2" value="0..N" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="rel_e_l">
+          <mxGeometry x="0.8" relative="1" as="geometry"><mxPoint x="15" y="-10" as="offset"/></mxGeometry>
+        </mxCell>
+
+        <!-- Employee <-> Department (Manager 1:1) -->
+        <mxCell id="rel_e_d_mgr" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.75;entryX=0.5;entryY=1;endArrow=none;strokeColor=#000000;" edge="1" parent="1" source="class_employees" target="class_departments">
+          <mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="640" y="265"/><mxPoint x="640" y="200"/><mxPoint x="810" y="200"/></Array></mxGeometry>
+        </mxCell>
+        <mxCell id="rel_label_mgr" value="Manager" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="rel_e_d_mgr">
+          <mxGeometry x="0" relative="1" as="geometry"><mxPoint y="-10" as="offset"/></mxGeometry>
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
